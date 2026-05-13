@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
+
+  <title>Vita Comunicação</title>
+
+  <!-- ✅ Fontes (correto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#050505;--card:#0d0d0d;--accent:#c6ff7b;--text:#fff;--muted:#9d9d9d;
+      --glass:rgba(255,255,255,.04);--border:rgba(255,255,255,.08);
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);
+      overflow-x:hidden;position:relative;-webkit-font-smoothing:antialiased;
+    }
+
+    /* ✅ garante que nada fica azul / sem estilo no mobile */
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit;color:inherit;-webkit-appearance:none;appearance:none;border:none;background:none}
+    button,a{-webkit-tap-highlight-color:transparent}
+    img{max-width:100%;display:block}
+
+    /* FUNDO */
+    .bg-orb{position:fixed;border-radius:999px;filter:blur(120px);z-index:-2;opacity:.45;animation:float 12s ease-in-out infinite;will-change:transform}
+    .bg-orb.one{width:420px;height:420px;background:#c6ff7b;top:-120px;left:-100px}
+    .bg-orb.two{width:380px;height:380px;background:#6effc4;bottom:-120px;right:-80px;animation-delay:4s}
+    .bg-grid{
+      position:fixed;inset:0;z-index:-3;
+      background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size:60px 60px;mask-image:radial-gradient(circle at center, black 30%, transparent 90%);
+    }
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(40px)}100%{transform:translateY(0)}}
+
+    /* NAV */
+    nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:calc(100% - 40px);max-width:1200px;z-index:999}
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 28px;border-radius:24px;background:rgba(10,10,10,.55);
+      backdrop-filter:blur(20px);border:1px solid var(--border)
+    }
+    .logo{font-size:1.5rem;font-weight:800;letter-spacing:-1px}
+    .logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:26px}
+    .nav-links a{color:#fff;font-size:.92rem;opacity:.75;transition:.3s}
+    .nav-links a:hover{opacity:1;color:var(--accent)}
+
+    .nav-btn{
+      padding:14px 20px;background:var(--accent);border-radius:999px;
+      font-weight:700;cursor:pointer;transition:.3s;color:#000;
+      display:inline-flex;align-items:center;justify-content:center
+    }
+    .nav-btn:hover{transform:translateY(-3px) scale(1.03)}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:160px 30px 80px;overflow:visible}
+    .container{width:100%;max-width:1200px;margin:auto;position:relative;z-index:2}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+    .tag{
+      display:inline-flex;align-items:center;gap:10px;padding:12px 18px;
+      background:var(--glass);border:1px solid var(--border);border-radius:999px;font-size:.85rem;backdrop-filter:blur(10px)
+    }
+    .tag-dot{width:10px;height:10px;border-radius:999px;background:var(--accent);box-shadow:0 0 20px var(--accent)}
+    .hero h1{font-size:clamp(3.5rem,7vw,7rem);line-height:.95;letter-spacing:-4px;margin-top:26px;font-weight:800}
+    .hero h1 span{color:var(--accent)}
+    .hero p{margin-top:30px;font-size:1.1rem;line-height:1.9;color:var(--muted);max-width:640px}
+    .hero-buttons{display:flex;gap:18px;margin-top:40px;flex-wrap:wrap}
+
+    .btn-primary,.btn-secondary{
+      padding:18px 30px;border-radius:999px;font-weight:700;cursor:pointer;
+      font-size:1rem;transition:.35s;display:inline-flex;align-items:center;justify-content:center;user-select:none
+    }
+    .btn-primary{background:var(--accent);color:#000}
+    .btn-primary:hover{transform:translateY(-5px) scale(1.03);box-shadow:0 20px 40px rgba(198,255,123,.25)}
+    .btn-secondary{background:transparent;color:#fff;border:1px solid var(--border);font-weight:600}
+    .btn-secondary:hover{background:#fff;color:#000}
+
+    .hero-media-wrap{position:relative;padding:26px;overflow:visible}
+    .hero-card{
+      position:relative;padding:24px;background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);border-radius:36px;backdrop-filter:blur(20px);overflow:visible
+    }
+    .hero-card video{width:100%;border-radius:24px;display:block;object-fit:cover}
+
+    .float-card{
+      position:absolute;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+      backdrop-filter:blur(20px);border-radius:24px;padding:18px 20px;animation:floaty 6s ease-in-out infinite;
+      max-width:280px;white-space:normal;line-height:1.25;box-shadow:0 18px 40px rgba(0,0,0,.35);pointer-events:none
+    }
+    .float-card.one{top:78px;right:-22px}
+    .float-card.two{bottom:46px;left:-22px;animation-delay:2s}
+    @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-14px)}100%{transform:translateY(0)}}
+
+    /* SECTION */
+    section{padding:120px 30px;position:relative}
+    .section-head{max-width:760px;margin-bottom:70px}
+    .section-head h3{font-size:clamp(2.4rem,4vw,4.5rem);line-height:1;letter-spacing:-3px;margin-top:24px}
+    .section-head p{margin-top:24px;line-height:1.9;color:var(--muted);font-size:1.05rem}
+
+    /* GLASS */
+    .glass-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:34px;padding:40px;backdrop-filter:blur(18px);position:relative;overflow:hidden}
+    .glass-box::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent)}
+
+    /* ABOUT */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+    .about-box h4{font-size:2rem;margin-bottom:20px}
+    .about-box p{line-height:1.9;color:var(--muted)}
+    .founders{display:flex;gap:20px;margin-top:30px;flex-wrap:wrap}
+    .founder{flex:1;min-width:220px;padding:24px;border-radius:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+    .founder h5{font-size:1.2rem;margin-bottom:10px}
+    .founder span{color:var(--accent);font-size:.9rem}
+
+    /* CARDS */
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+    .card{
+      padding:34px;border-radius:34px;background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);transition:.35s;backdrop-filter:blur(20px);position:relative;overflow:hidden
+    }
+    .card:hover{transform:translateY(-8px);border-color:rgba(198,255,123,.4)}
+    .card::after{content:'';position:absolute;width:180px;height:180px;background:rgba(198,255,123,.08);border-radius:999px;top:-80px;right:-80px;filter:blur(40px)}
+    .card h4{font-size:1.5rem;margin-top:20px}
+    .card p{margin-top:18px;line-height:1.8;color:var(--muted)}
+
+    /* ÍCONES SERVIÇOS */
+    .service-icon{
+      width:46px;height:46px;border-radius:16px;display:grid;place-items:center;
+      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:var(--accent);
+      box-shadow:0 18px 40px rgba(0,0,0,.18)
+    }
+    .service-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+    /* PROJETOS (✅ imagem robusta: background + img + fallback) */
+    .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px}
+    .project-card{
+      position:relative;overflow:hidden;border-radius:34px;height:520px;border:1px solid rgba(255,255,255,.08);
+      background:#0b0b0b;
+    }
+    .project-media{
+      position:absolute;inset:0;
+      background-image:var(--img);
+      background-size:cover;background-position:center;background-repeat:no-repeat;
+      transform:translateZ(0);
+    }
+    .project-card img{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      display:block;
+    }
+    .project-overlay{
+      position:absolute;inset:0;padding:34px;display:flex;flex-direction:column;justify-content:flex-end;
+      background:linear-gradient(to top, rgba(0,0,0,.92), transparent);
+    }
+    .project-overlay h4{font-size:2rem;margin-top:12px}
+    .project-overlay p{margin-top:12px;line-height:1.8;color:#d7d7d7}
+    .project-btn{
+      margin-top:26px;padding:16px 20px;border-radius:16px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;transition:.3s;
+      display:inline-flex;align-items:center;justify-content:center
+    }
+    .project-btn:hover{background:var(--accent);color:#000}
+
+    /* CTA */
+    .cta{
+      padding:80px;border-radius:44px;background:linear-gradient(135deg,#101010,#1a1a1a);
+      border:1px solid rgba(255,255,255,.08);text-align:center;position:relative;overflow:hidden
+    }
+    .cta::before{content:'';position:absolute;width:420px;height:420px;background:rgba(198,255,123,.14);border-radius:999px;filter:blur(120px);top:-100px;right:-120px}
+    .cta h3{font-size:clamp(2.5rem,4vw,4.5rem);line-height:1;letter-spacing:-3px}
+    .cta p{margin:24px auto 0;max-width:700px;line-height:1.9;color:var(--muted)}
+
+    /* FOOTER */
+    footer{padding:60px 30px;border-top:1px solid rgba(255,255,255,.08);margin-top:80px}
+    .footer-inner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .footer-inner p{color:var(--muted);line-height:1.8}
+
+    /* MODAIS */
+    #caseModal,#formModal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:30px;z-index:999999;backdrop-filter:blur(10px)}
+    .modal-box{width:100%;max-width:720px;background:#101010;border:1px solid rgba(255,255,255,.08);border-radius:36px;padding:44px;position:relative}
+    .close-modal{position:absolute;top:18px;right:18px;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer}
+
+    /* FORM */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+    .field{display:flex;flex-direction:column;gap:8px}
+    .label{font-size:.85rem;color:#d7d7d7;opacity:.9}
+    .input,.textarea{
+      width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);
+      color:#fff;padding:14px 14px;outline:none;font-family:'Inter',sans-serif;transition:.25s
+    }
+    .input:focus,.textarea:focus{border-color:rgba(198,255,123,.55);box-shadow:0 0 0 4px rgba(198,255,123,.12)}
+    .textarea{min-height:120px;resize:vertical;line-height:1.5}
+    .helper{margin-top:12px;color:var(--muted);font-size:.9rem;line-height:1.7}
+    select.input{
+      appearance:none;
+      background-image:linear-gradient(45deg, transparent 50%, rgba(255,255,255,.7) 50%),linear-gradient(135deg, rgba(255,255,255,.7) 50%, transparent 50%);
+      background-position:calc(100% - 18px) calc(50% - 3px),calc(100% - 12px) calc(50% - 3px);
+      background-size:6px 6px;background-repeat:no-repeat
+    }
+
+   /* RESPONSIVO */
+@media(max-width:980px){
+
+  .hero-grid{
+    grid-template-columns:1fr
+  }
+
+  .about-grid{
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+
+  .nav-links{
+    display:none
+  }
+
+  .hero{
+    padding-top:140px
+  }
+
+  .hero h1{
+    letter-spacing:-2px
+  }
+
+  .cta{
+    padding:50px 28px
+  }
+
+  .hero-media-wrap{
+    padding:0
+  }
+
+  .float-card{
+    max-width:220px;
+    padding:14px 16px;
+    font-size:.92rem
+  }
+
+  .float-card.one{
+    top:18px;
+    right:18px
+  }
+
+  .float-card.two{
+    bottom:18px;
+    left:18px
+  }
+
+  .form-grid{
+    grid-template-columns:1fr
+  }
+
+  /* ===== SERVIÇOS EM 2 COLUNAS ===== */
+
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+
+  .card{
+    padding:22px;
+    border-radius:24px;
+  }
+
+  .card h4{
+    font-size:1.05rem;
+    margin-top:14px;
+  }
+
+  .card p{
+    font-size:.82rem;
+    line-height:1.6;
+    margin-top:10px;
+  }
+
+  .service-icon{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+  }
+
+  .service-icon svg{
+    width:18px;
+    height:18px;
+  }
+
+  /* ===== NOSSA VISÃO ===== */
+
+  .glass-box{
+    padding:24px;
+    border-radius:24px;
+  }
+
+  .about-box h4{
+    font-size:1.5rem;
+    margin-bottom:14px;
+  }
+
+  .about-box p{
+    font-size:.9rem;
+    line-height:1.7;
+  }
+
+  /* ===== SÓCIOS ===== */
+
+  .founders{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:10px;
+  }
+
+  .founder{
+    min-width:auto;
+    padding:18px;
+    border-radius:18px;
+  }
+
+  .founder h5{
+    font-size:1rem;
+    margin-bottom:6px;
+  }
+
+  .founder span{
+    font-size:.78rem;
+  }
+
+  /* ===== PLANOS ===== */
+
+  #planos .cards{
+    grid-template-columns:1fr;
+  }
+
+  /* ===== PROJETOS ===== */
+
+  .project-grid{
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+
+  .project-card{
+    height:420px;
+  }
+
+/* ===== AJUSTES MOBILE ===== */
+
+.card{
+  padding:18px;
+}
+
+.card h4{
+  font-size:.88rem;
+  line-height:1.35;
+  word-break:normal;
+  overflow-wrap:normal;
+  hyphens:none;
+}
+
+#planos .btn-primary{
+  font-size:.82rem;
+  padding:16px 12px;
+  white-space:nowrap;
+}
+
+}
+
+/* ===== HERO MOCKUP PREMIUM ===== */
+
+.hero-mockup{
+  position:relative;
+  min-height:640px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at top left, rgba(198,255,123,.16), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(110,255,196,.12), transparent 40%),
+    linear-gradient(135deg,#0d0d0d,#151515);
+}
+
+.mockup-glow{
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:999px;
+  background:rgba(198,255,123,.18);
+  filter:blur(100px);
+  animation:pulseGlow 5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
+
+.mockup-phone{
+  position:relative;
+  width:320px;
+  border-radius:42px;
+  padding:14px;
+  background:#0b0b0b;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 40px 80px rgba(0,0,0,.55),
+    0 0 0 1px rgba(255,255,255,.04);
+  z-index:2;
+  animation:floatPhone 6s ease-in-out infinite;
+}
+
+@keyframes floatPhone{
+  0%{transform:translateY(0px);}
+  50%{transform:translateY(-14px);}
+  100%{transform:translateY(0px);}
+}
+
+.mockup-screen{
+  border-radius:30px;
+  overflow:hidden;
+  background:#111;
+}
+
+.mockup-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:18px;
+  background:#121212;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.mockup-avatar{
+  width:42px;
+  height:42px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--accent),#6effc4);
+}
+
+.mockup-name{
+  font-weight:700;
+  font-size:.95rem;
+}
+
+.mockup-role{
+  font-size:.78rem;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.mockup-video{
+  background:#000;
+}
+
+.mockup-video video{
+  width:100%;
+  height:420px;
+  object-fit:cover;
+  display:block;
+  background:#000;
+}
+
+.mockup-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  padding:14px;
+  background:#121212;
+}
+
+.stat-box{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:16px;
+  padding:12px 8px;
+  text-align:center;
+  min-width:0;
+}
+
+.stat-box strong{
+  display:block;
+  color:var(--accent);
+  font-size:.82rem;
+  line-height:1.2;
+}
+
+.stat-box span{
+  font-size:.64rem;
+  color:var(--muted);
+  line-height:1.2;
+  word-break:break-word;
+}
+
+/* MOBILE */
+
+@media(max-width:980px){
+
+  .hero-mockup{
+    min-height:560px;
+  }
+
+  .mockup-phone{
+    width:280px;
+  }
+
+  .mockup-video video{
+    height:360px;
+  }
+
+}
+/* ===== AJUSTE MOCKUP ===== */
+
+.mockup-stats{
+  grid-template-columns:1fr;
+  gap:8px;
+}
+
+.stat-box{
+  padding:12px;
+}
+
+.stat-box strong{
+  font-size:.9rem;
+  line-height:1.2;
+  word-break:break-word;
+}
+
+.stat-box span{
+  font-size:.72rem;
+}
+
+/* MOBILE */
+
+@media(max-width:980px){
+
+  .float-card{
+    max-width:160px;
+    font-size:.72rem;
+    padding:10px 12px;
+    border-radius:16px;
+  }
+
+  .float-card.one{
+    top:10px;
+    right:10px;
+  }
+
+  .float-card.two{
+    bottom:10px;
+    left:10px;
+  }
+
+  .mockup-phone{
+    width:260px;
+  }
+
+  .mockup-video video{
+    height:300px;
+  }
+
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-orb one"></div>
+  <div class="bg-orb two"></div>
+
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">Vita<span>.</span></div>
+
+      <div class="nav-links">
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#planos">Planos</a>
+      </div>
+
+      <!-- ✅ funciona sem JS (WhatsApp direto) e com JS (abre formulário) -->
+      <a class="nav-btn" href="https://wa.me/5551992942756" data-open-form data-plan="Contato direto (Topo)">Falar conosco</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="topo">
+    <div class="container">
+      <div class="hero-grid">
+
+        <div>
+          <div class="tag"><div class="tag-dot"></div>Agência de posicionamento premium</div>
+
+          <h1>Sua marca precisa parecer <span>maior</span> do que ela é.</h1>
+
+          <p>
+            A Vita Comunicação cria conteúdo, estética e posicionamento para empresas que querem transmitir autoridade, gerar desejo e aumentar vendas através de uma presença digital premium.
+          </p>
+
+          <div class="hero-buttons">
+            <a class="btn-primary" href="#planos">Ver planos</a>
+            <a class="btn-secondary" href="#projetos">Ver projetos</a>
+          </div>
+        </div>
+
+        <div class="hero-media-wrap">
+          <div class="hero-card hero-mockup">
+
+  <div class="mockup-glow"></div>
+
+  <div class="mockup-phone">
+    <div class="mockup-screen">
+
+      <div class="mockup-top">
+        <div class="mockup-avatar"></div>
+
+        <div>
+          <div class="mockup-name">vita.comunicacao</div>
+          <div class="mockup-role">Posicionamento Premium</div>
+        </div>
+      </div>
+
+  <div class="mockup-video">
+  <video autoplay muted loop playsinline preload="auto">
+    <source src="video-vita.mp4" type="video/mp4">
+  </video>
+</div>
+
+      <div class="mockup-stats">
+        <div class="stat-box">
+          <strong>+218%</strong>
+          <span>Alcance</span>
+        </div>
+
+        <div class="stat-box">
+          <strong>Premium</strong>
+          <span>Percepção</span>
+        </div>
+
+        <div class="stat-box">
+          <strong>Autoridade</strong>
+          <span>Marca</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div class="container">
+
+      <div class="section-head">
+        <div class="tag"><div class="tag-dot"></div>Sobre nós</div>
+        <h3>A Vita nasceu para elevar marcas comuns a marcas desejadas.</h3>
+        <p>
+          Fundada por Guilherme Fagundes e Eloize Fagundes, a Vita Comunicação surgiu da união entre estratégia, estética e visão de posicionamento. Mais do que produzir conteúdo, nossa missão é construir marcas que pareçam premium, relevantes e impossíveis de ignorar.
+        </p>
+      </div>
+
+      <div class="about-grid">
+
+        <div class="glass-box about-box">
+          <h4>Nossa visão</h4>
+          <p>
+            Hoje, empresas não competem apenas por preço. Competem por atenção, percepção e autoridade. Quem parece maior, vende mais. Quem transmite valor, cobra mais caro.
+          </p>
+          <p style="margin-top:20px;">É exatamente isso que fazemos: criamos presença digital com aparência de marca grande.</p>
+        </div>
+
+        <div class="glass-box">
+          <div class="founders">
+            <div class="founder">
+              <h5>Gui Fagundes</h5>
+              <span>Estratégia &amp; Negócios</span>
+            </div>
+            <div class="founder">
+              <h5>Eloize Fagundes</h5>
+              <span>Criação &amp; Estética</span>
+            </div>
+          </div>
+
+          <p style="margin-top:28px; color:var(--muted); line-height:1.9;">
+            Cada projeto é tratado de forma estratégica e personalizada, unindo comunicação, estética cinematográfica e posicionamento de alto valor.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos">
+    <div class="container">
+      <div class="section-head">
+        <div class="tag"><div class="tag-dot"></div>Serviços</div>
+        <h3>Conteúdo premium para marcas que querem crescer.</h3>
+        <p>Não fazemos apenas posts. Criamos presença, percepção e autoridade digital.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7 7h10v10H7z"></path><path d="M7 12h10"></path><path d="M12 7v10"></path></svg>
+          </div>
+          <h4>Gestão de Redes</h4>
+          <p>Planejamento estratégico, calendário editorial e posicionamento profissional.</p>
+        </div>
+
+        <div class="card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M10 8l8 4-8 4z"></path><path d="M4 6h16v12H4z"></path></svg>
+          </div>
+          <h4>Reels Cinematográficos</h4>
+          <p>Vídeos modernos, dinâmicos e envolventes que aumentam retenção e percepção premium.</p>
+        </div>
+
+        <div class="card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 8h16v10H4z"></path><path d="M9 8l1.5-2h3L15 8"></path><circle cx="12" cy="13" r="2.6"></circle></svg>
+          </div>
+          <h4>Media Day</h4>
+          <p>Captação intensiva de conteúdo profissional em um único dia.</p>
+        </div>
+
+        <div class="card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3l2.2 6.2L21 12l-6.8 2.8L12 21l-2.2-6.2L3 12l6.8-2.8z"></path></svg>
+          </div>
+          <h4>Branding</h4>
+          <p>Identidade visual sofisticada para marcas que querem transmitir autoridade.</p>
+        </div>
+
+        <div class="card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 20h4l10.5-10.5a2 2 0 0 0 0-3L16.5 4a2 2 0 0 0-3 0L3 14.5V20z"></path><path d="M13.5 5.5l5 5"></path></svg>
+          </div>
+          <h4>Copywriting</h4>
+          <p>Textos estratégicos que transformam atenção em desejo e vendas.</p>
+        </div>
+
+        <div class="card">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><path d="M12 12l4-2"></path><path d="M12 4v2"></path></svg>
+          </div>
+          <h4>Posicionamento</h4>
+          <p>Estratégia para fazer sua marca parecer maior, mais forte e mais valiosa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="container">
+      <div class="section-head">
+        <div class="tag"><div class="tag-dot"></div>Projetos</div>
+        <h3>Projetos que elevaram percepção e aumentaram vendas.</h3>
+        <p>Empresas não compram apenas conteúdo. Compram autoridade, posicionamento e a sensação de parecer maiores, mais desejadas e mais profissionais.</p>
+      </div>
+
+      <div class="project-grid">
+      <!-- ✅ CARD 1 -->
+<div class="project-card">
+  <div class="project-media" style="--img:url('Dr.-Caio-e1707401300199-1024x981.webp');"></div>
+  <img
+    src="Dr.-Caio-e1707401300199-1024x981.webp"
+    alt="Branding e conteúdo - Caio Matzenbacher"
+    loading="eager"
+    decoding="async"
+    onerror="this.style.display='none';"
+  />
+  <div class="project-overlay">
+    <div style="font-size:.8rem; letter-spacing:.14em; text-transform:uppercase;">Branding &amp; Conteúdo</div>
+    <h4>Caio Matzenbacher</h4>
+    <p>Reposicionamento visual e estratégia focada em autoridade estética e aumento de percepção premium.</p>
+    <button class="project-btn" type="button" data-open-case data-case-title="Caio Matzenbacher"
+      data-case-text="+218% de alcance orgânico em menos de 90 dias, aumento significativo de agendamentos e fortalecimento completo da percepção premium da marca.">
+      Ver case →
+    </button>
+  </div>
+</div>
+
+<!-- ✅ CARD 2 -->
+<div class="project-card">
+  <div class="project-media" style="--img:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop');"></div>
+  <img
+    src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop"
+    alt="Conteúdo premium - Pátio Resto"
+    loading="eager"
+    decoding="async"
+    referrerpolicy="no-referrer"
+    onerror="this.style.display='none';"
+  />
+  <div class="project-overlay">
+    <div style="font-size:.8rem; letter-spacing:.14em; text-transform:uppercase;">Conteúdo Premium</div>
+    <h4>Pátio Resto</h4>
+    <p>Conteúdo cinematográfico e posicionamento visual para transformar presença digital em desejo.</p>
+    <button class="project-btn" type="button" data-open-case data-case-title="Pátio Resto"
+      data-case-text="Produção estratégica de vídeos e conteúdo premium que aumentou autoridade, percepção e movimento físico no restaurante.">
+      Ver case →
+    </button>
+  </div>
+</div>
+
+<!-- ✅ CARD 3 -->
+<div class="project-card">
+  <div class="project-media" style="--img:url('11218984.jpg');"></div>
+  <img
+    src="11218984.jpg"
+    alt="Moda e lifestyle - Vanda Pires"
+    loading="eager"
+    decoding="async"
+    onerror="this.style.display='none';"
+  />
+  <div class="project-overlay">
+    <div style="font-size:.8rem; letter-spacing:.14em; text-transform:uppercase;">Moda &amp; Lifestyle</div>
+    <h4>Vanda Pires</h4>
+    <p>Fortalecimento de marca e comunicação sofisticada voltada ao público premium.</p>
+    <button class="project-btn" type="button" data-open-case data-case-title="Vanda Pires"
+      data-case-text="Estratégia visual e posicionamento sofisticado que aumentaram percepção de valor premium e conversão digital.">
+      Ver case →
+    </button>
+  </div>
+</div>
+  </section>
+
+  <section id="planos">
+    <div class="container">
+      <div class="section-head">
+        <div class="tag"><div class="tag-dot"></div>Investimento</div>
+        <h3>Seu posicionamento define quanto sua marca consegue cobrar.</h3>
+        <p>Empresas com comunicação premium atraem clientes melhores, aumentam percepção de valor e vendem com muito mais facilidade.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div style="font-size:.8rem; color:var(--accent); letter-spacing:.12em;">ESSENCIAL</div>
+          <h4 style="font-size:2rem;">LIV</h4>
+          <div style="font-size:3rem; font-weight:800; margin-top:20px;">R$ 1.497</div>
+          <div style="margin-top:8px; font-size:.8rem; color:var(--muted);">Contratação mínima de 6 meses</div>
+          <p>Ideal para empresas que querem começar a construir autoridade profissional.</p>
+
+          <!-- ✅ funciona sem JS (WhatsApp) e com JS (form) -->
+          <a class="btn-primary" style="width:100%; margin-top:32px;" href="https://wa.me/5551992942756?text=Tenho%20interesse%20no%20plano%20LIV%20(ESSENCIAL)%20%E2%80%94%20R%24%201.497"
+             data-open-form data-plan="LIV (ESSENCIAL) — R$ 1.497">
+            Quero elevar minha marca →
+          </a>
+        </div>
+
+        <div class="card">
+          <div style="position:absolute; top:18px; right:18px; background:var(--accent); color:#000; padding:8px 14px; border-radius:999px; font-size:.75rem; font-weight:700;">
+            Mais escolhido
+          </div>
+          <div style="font-size:.8rem; color:var(--accent); letter-spacing:.12em;">PREMIUM</div>
+          <h4 style="font-size:2rem;">HAYAT</h4>
+          <div style="font-size:3rem; font-weight:800; margin-top:20px;">R$ 2.497</div>
+          <div style="margin-top:8px; font-size:.8rem; color:var(--muted);">Contratação mínima de 6 meses</div>
+          <p>Para marcas que querem crescer rápido e parecer líderes do mercado.</p>
+
+          <a class="btn-primary" style="width:100%; margin-top:32px;" href="https://wa.me/5551992942756?text=Tenho%20interesse%20no%20plano%20HAYAT%20(PREMIUM)%20%E2%80%94%20R%24%202.497"
+             data-open-form data-plan="HAYAT (PREMIUM) — R$ 2.497">
+            Quero gerar mais autoridade →
+          </a>
+        </div>
+
+        <div class="card">
+          <div style="font-size:.8rem; color:var(--accent); letter-spacing:.12em;">LUXURY</div>
+          <h4 style="font-size:2rem;">LEBEN</h4>
+          <div style="font-size:3rem; font-weight:800; margin-top:20px;">R$ 4.497</div>
+          <div style="margin-top:8px; font-size:.8rem; color:var(--muted);">Contratação mínima de 6 meses</div>
+          <p>Estrutura completa para empresas que querem dominar percepção e mercado.</p>
+
+          <a class="btn-primary" style="width:100%; margin-top:32px;" href="https://wa.me/5551992942756?text=Tenho%20interesse%20no%20plano%20LEBEN%20(LUXURY)%20%E2%80%94%20R%24%204.497"
+             data-open-form data-plan="LEBEN (LUXURY) — R$ 4.497">
+            Quero escalar minha marca →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="cta">
+        <h3>Quem parece premium, vende premium.</h3>
+        <p>Sua empresa pode continuar parecendo apenas mais uma… ou começar a transmitir autoridade, desejo e posicionamento de marca grande.</p>
+        <div style="margin-top:40px;">
+          <a class="btn-primary" href="https://wa.me/5551992942756" data-open-form data-plan="Quero falar com a Vita (CTA)">Falar com a Vita →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="logo">Vita<span>.</span></div>
+        <p style="margin-top:14px;">Posicionamento premium para marcas que querem crescer.</p>
+      </div>
+      <div>
+        <p>Novo Hamburgo • Rio Grande do Sul</p>
+        <p>WhatsApp: (51) 99294-2756</p>
+        <p>Instagram: @vita.comunicacao</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL CASE -->
+  <div id="caseModal">
+    <div class="modal-box">
+      <button class="close-modal" type="button" data-close-case>✕</button>
+      <div class="tag"><div class="tag-dot"></div>Case de sucesso</div>
+      <h3 id="caseTitle" style="font-size:3rem; margin-top:20px; line-height:1;"></h3>
+      <p id="caseText" style="margin-top:22px; color:var(--muted); line-height:1.9; font-size:1rem;"></p>
+      <a class="btn-primary" style="margin-top:32px; width:100%;" href="https://wa.me/5551992942756">Quero resultados assim →</a>
+    </div>
+  </div>
+
+  <!-- MODAL FORM -->
+  <div id="formModal">
+    <div class="modal-box">
+      <button class="close-modal" type="button" data-close-form>✕</button>
+
+      <div class="tag"><div class="tag-dot"></div>Formulário de interesse</div>
+      <h3 style="font-size:2.4rem; margin-top:18px; line-height:1.05;">Vamos montar sua mensagem pro WhatsApp em 30 segundos.</h3>
+
+      <p class="helper">Plano selecionado: <strong id="chosenPlan" style="color:var(--accent);"></strong></p>
+
+      <form id="leadForm" autocomplete="on" style="margin-top:18px;">
+        <div class="form-grid">
+          <div class="field">
+            <div class="label">Seu nome</div>
+            <input class="input" id="leadName" name="name" placeholder="Ex.: Guilherme" required />
+          </div>
+          <div class="field">
+            <div class="label">Empresa</div>
+            <input class="input" id="leadCompany" name="company" placeholder="Ex.: Caio Matzenbacher" required />
+          </div>
+          <div class="field">
+            <div class="label">Instagram (opcional)</div>
+            <input class="input" id="leadInstagram" name="instagram" placeholder="@seuperfil" />
+          </div>
+          <div class="field">
+            <div class="label">Telefone (opcional)</div>
+            <input class="input" id="leadPhone" name="phone" placeholder="(51) 99999-9999" />
+          </div>
+        </div>
+
+        <div class="form-grid" style="margin-top:14px;">
+          <div class="field">
+            <div class="label">Melhor horário para contato</div>
+            <select class="input" id="leadTime" name="time">
+              <option value="">Selecione (opcional)</option>
+              <option value="Manhã">Manhã</option>
+              <option value="Tarde">Tarde</option>
+              <option value="Noite">Noite</option>
+            </select>
+          </div>
+          <div class="field">
+            <div class="label">Objetivo principal</div>
+            <select class="input" id="leadObjective" name="objective">
+              <option value="">Selecione (opcional)</option>
+              <option value="Mais agendamentos">Mais agendamentos</option>
+              <option value="Reposicionamento premium">Reposicionamento premium</option>
+              <option value="Reels / vídeo cinematográfico">Reels / vídeo cinematográfico</option>
+              <option value="Branding / identidade visual">Branding / identidade visual</option>
+              <option value="Copy / conversão">Copy / conversão</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:14px;">
+          <div class="label">O que você quer melhorar agora?</div>
+          <textarea class="textarea" id="leadGoal" name="goal" placeholder="Ex.: mais agendamentos, posicionamento premium, conteúdo cinematográfico..." required></textarea>
+        </div>
+
+        <div class="field" style="margin-top:14px;">
+          <div class="label">Prévia da mensagem</div>
+          <textarea class="textarea" id="waPreview" readonly style="opacity:.9"></textarea>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap;">
+          <button type="button" class="btn-secondary" id="copyBtn">Copiar mensagem</button>
+          <button type="button" class="btn-secondary" id="openWaBtn">Abrir WhatsApp</button>
+        </div>
+
+        <button class="btn-primary" style="width:100%; margin-top:18px;" type="submit">Enviar para WhatsApp →</button>
+        <p class="helper">Se o navegador bloquear, use “Abrir WhatsApp” ou “Copiar mensagem”.</p>
+
+        <input type="text" id="companyWebsite" name="companyWebsite" style="display:none" tabindex="-1" autocomplete="off" />
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      let selectedPlan = '';
+      let lastWaUrl = '';
+
+      const $ = (s, root=document) => root.querySelector(s);
+      const $$ = (s, root=document) => Array.from(root.querySelectorAll(s));
+
+      function openCase(title, text){
+        $('#caseTitle').innerText = title || '';
+        $('#caseText').innerText = text || '';
+        $('#caseModal').style.display = 'flex';
+      }
+      function closeCase(){ $('#caseModal').style.display = 'none'; }
+
+      function openForm(plan){
+        selectedPlan = plan || 'Não informado';
+        $('#chosenPlan').innerText = selectedPlan;
+        $('#formModal').style.display = 'flex';
+        restoreLead();
+        refreshPreview();
+        setTimeout(()=> $('#leadName')?.focus(), 50);
+      }
+      function closeForm(){ $('#formModal').style.display = 'none'; }
+
+      function buildWaMessage(){
+        const name = $('#leadName').value.trim();
+        const company = $('#leadCompany').value.trim();
+        const instagram = $('#leadInstagram').value.trim();
+        const phone = $('#leadPhone').value.trim();
+        const goal = $('#leadGoal').value.trim();
+        const time = $('#leadTime').value || '';
+        const objective = $('#leadObjective').value || '';
+
+        const lines = [
+          'Olá! Quero falar com a Vita Comunicação 👋',
+          '',
+          `Nome: ${name || '-'}`,
+          `Empresa: ${company || '-'}`,
+          `Plano de interesse: ${selectedPlan || 'Não informado'}`
+        ];
+        if(instagram) lines.push(`Instagram: ${instagram}`);
+        if(phone) lines.push(`Telefone: ${phone}`);
+        if(objective) lines.push(`Objetivo principal: ${objective}`);
+        if(time) lines.push(`Melhor horário: ${time}`);
+        lines.push('');
+        lines.push('Objetivo/Contexto:');
+        lines.push(goal || '-');
+        return lines.join('\n');
+      }
+
+      function refreshPreview(){
+        const msg = buildWaMessage();
+        $('#waPreview').value = msg;
+        lastWaUrl = `https://wa.me/5551992942756?text=${encodeURIComponent(msg)}`;
+      }
+
+      function openWhatsApp(){
+        refreshPreview();
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if(isMobile) window.location.href = lastWaUrl;
+        else window.open(lastWaUrl, '_blank');
+      }
+
+      function copyPreview(){
+        const preview = $('#waPreview');
+        preview.select();
+        preview.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+      }
+
+      function persistLead(){
+        const data = {
+          name: $('#leadName').value || '',
+          company: $('#leadCompany').value || '',
+          instagram: $('#leadInstagram').value || '',
+          phone: $('#leadPhone').value || '',
+          time: $('#leadTime').value || '',
+          objective: $('#leadObjective').value || '',
+          goal: $('#leadGoal').value || ''
+        };
+        localStorage.setItem('vitaLeadDraft', JSON.stringify(data));
+      }
+
+      function restoreLead(){
+        const raw = localStorage.getItem('vitaLeadDraft');
+        if(!raw) return;
+        try{
+          const d = JSON.parse(raw);
+          $('#leadName').value = d.name || '';
+          $('#leadCompany').value = d.company || '';
+          $('#leadInstagram').value = d.instagram || '';
+          $('#leadPhone').value = d.phone || '';
+          $('#leadTime').value = d.time || '';
+          $('#leadObjective').value = d.objective || '';
+          $('#leadGoal').value = d.goal || '';
+        }catch(e){}
+      }
+
+      document.addEventListener('DOMContentLoaded', ()=>{
+        // Intercepta cliques com data-open-form (sem quebrar fallback)
+        $$('[data-open-form]').forEach(el=>{
+          el.addEventListener('click', (e)=>{
+            // Se JS estiver rodando, abre o form; se não, o href abre WhatsApp normal.
+            e.preventDefault();
+            openForm(el.getAttribute('data-plan') || 'Contato');
+          });
+        });
+
+        $$('[data-open-case]').forEach(btn=>{
+          btn.addEventListener('click', ()=>{
+            openCase(btn.getAttribute('data-case-title'), btn.getAttribute('data-case-text'));
+          });
+        });
+
+        $('[data-close-case]')?.addEventListener('click', closeCase);
+        $('[data-close-form]')?.addEventListener('click', closeForm);
+
+        $('#caseModal')?.addEventListener('click', (e)=>{ if(e.target.id==='caseModal') closeCase(); });
+        $('#formModal')?.addEventListener('click', (e)=>{ if(e.target.id==='formModal') closeForm(); });
+
+        window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeCase(); closeForm(); }});
+
+        ['leadName','leadCompany','leadInstagram','leadPhone','leadTime','leadObjective','leadGoal'].forEach(id=>{
+          const el = document.getElementById(id);
+          if(!el) return;
+          el.addEventListener('input', ()=>{ persistLead(); refreshPreview(); });
+          el.addEventListener('change', ()=>{ persistLead(); refreshPreview(); });
+        });
+
+        $('#copyBtn')?.addEventListener('click', copyPreview);
+        $('#openWaBtn')?.addEventListener('click', openWhatsApp);
+
+        $('#leadForm')?.addEventListener('submit', (e)=>{
+          e.preventDefault();
+          const hp = $('#companyWebsite');
+          if(hp && hp.value.trim()) return;
+          openWhatsApp();
+          closeForm();
+        });
+
+        window.addEventListener('scroll', ()=>{
+          const scroll = window.scrollY;
+          const one = document.querySelector('.bg-orb.one');
+          const two = document.querySelector('.bg-orb.two');
+          if(one) one.style.transform = `translateY(${scroll * 0.12}px)`;
+          if(two) two.style.transform = `translateY(-${scroll * 0.08}px)`;
+        });
+      });
+    })();
+// ===== ANIMAÇÃO AO ROLAR =====
+
+const animatedElements = document.querySelectorAll(
+  '.card, .project-card, .glass-box, .founder'
+);
+
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach((entry)=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+},{
+  threshold:0.15
+});
+
+animatedElements.forEach((el)=>{
+  observer.observe(el);
+});
+  </script>
+</body>
+</html>
